@@ -16,6 +16,8 @@
 
 #define BUFF_SIZE 32
 
+#include <stdlib.h>
+
 int		get_next_line(int fd, char **line);
 
 #endif
