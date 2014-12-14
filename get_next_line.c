@@ -22,11 +22,10 @@ char *ft_realloc(char *ptr, size_t size)
     return (NULL);
   dst = (char*)malloc((size + 1) * sizeof(char));
   if (!dst)
-    {
-      printf("realloc failed");
-	return NULL;
-    }
+    return NULL;
   ft_memcpy(dst, ptr, size - BUFF_SIZE);
+  if (size != BUFF_SIZE)
+    free(ptr);
   return (dst);
 }
 
@@ -50,23 +49,21 @@ int get_next_line(const int fd, char **line)
   char buff[BUFF_SIZE];
   size_t size;
   int i;
-  int j;
-
+  char *temp;
 
   if(fd < 0)
     return -1;
   size = BUFF_SIZE;
   if(!line || !*line)
     return -1;
-  *line = "";
+  *line = malloc(sizeof(char));
+  *line[0] = '\0';
   while(1)
     {
+      temp = *line;
       *line = ft_realloc(*line, size);
       if(!(*line))
-	{
-	  printf("aqui\n");
 	  return -1;
-	}
       i = 0;
       while(i < BUFF_SIZE)
 	{
@@ -74,16 +71,11 @@ int get_next_line(const int fd, char **line)
 	    break;
 	  i++;
 	}
-      j = (buff[i] && buff[i] == '\n') ? i : i + 1;
-      //    while(j < BUFF_SIZE)
-      //	buff[j++] = '\0';
       ft_strccat(*line, buff, '\n', i);
       if (buff[i] == '\n')
 	  return 1; 
       if (i != BUFF_SIZE)
-	{
 	  return 0;
-	}
       size += BUFF_SIZE;
     }
   return -1;
