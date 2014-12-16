@@ -6,12 +6,11 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/19 09:34:28 by fschuber          #+#    #+#             */
-/*   Updated: 2014/12/01 16:08:07 by fschuber         ###   ########.fr       */
+/*   Updated: 2014/12/16 20:42:00 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-
 
 static int	numberofwords(char const *s, char c)
 {
