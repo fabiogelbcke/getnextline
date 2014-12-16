@@ -52,13 +52,10 @@ int			get_next_line(const int fd, char **line)
 		*line = ft_realloc(*line, size);
 		if (!(*line))
 			return (-1);
-		i = 0;
-		while (i < BUFF_SIZE)
-		{
+		i = -1;
+		while (++i < BUFF_SIZE)
 			if (read(fd, &(buff[i]), 1) != 1 || buff[i] == '\n')
 				break ;
-			i++;
-		}
 		ft_strccat(*line, buff, '\n', i);
 		if (buff[i] == '\n' || i != BUFF_SIZE)
 			return (buff[i] == '\n') ? 1 : 0;
