@@ -12,27 +12,22 @@
 
 #include "get_next_line.h"
 #include "libft/libft.h"
-#include <stdio.h>
 
-char *ft_realloc(char *ptr, size_t size)
+char		*ft_realloc(char *ptr, size_t size)
 {
-  char *dst;
+  char		*dst;
 
   if (!ptr)
     return (NULL);
-  dst = (char*)malloc((size + 1) * sizeof(char));
-  if (!dst)
-    return NULL;
-  ft_memcpy(dst, ptr, size - BUFF_SIZE);
-  if (size != BUFF_SIZE)
-    free(ptr);
-  return (dst);
+  dst = ptr;
+  dst += size - BUFF_SIZE;
+  dst = (char*)malloc(BUFF_SIZE * sizeof(char));
+  return (ptr);
 }
 
-void ft_strccat(char *dst, const char *src, char c, int readbytes)
+void		ft_strccat(char *dst, const char *src, char c, int readbytes)
 {
-  int i;
-  int dstsize;
+  int		i;
   
   i = 0;
   dst += ft_strlen(dst);
@@ -44,64 +39,37 @@ void ft_strccat(char *dst, const char *src, char c, int readbytes)
     }
 }
 
-int get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-  char buff[BUFF_SIZE];
-  size_t size;
-  int i;
-  char *temp;
+  char		buff[BUFF_SIZE];
+  size_t	size;
+  int		i;
 
-  if(fd < 0)
+  if (fd < 0)
     return -1;
   size = BUFF_SIZE;
-  if(!line || !*line)
-    return -1;
+  if (!line || !*line)
+    return (-1);
   *line = malloc(sizeof(char));
   *line[0] = '\0';
-  while(1)
+  while (1)
     {
-      temp = *line;
       *line = ft_realloc(*line, size);
-      if(!(*line))
-	  return -1;
+      if (!(*line))
+	return (-1);
       i = 0;
-      while(i < BUFF_SIZE)
+      while (i < BUFF_SIZE)
 	{
-	  if(read(fd, &(buff[i]), 1) != 1 || buff[i] == '\n')
+	  if (read(fd, &(buff[i]), 1) != 1 || buff[i] == '\n')
 	    break;
 	  i++;
 	}
       ft_strccat(*line, buff, '\n', i);
       if (buff[i] == '\n')
-	  return 1; 
+	return (1); 
       if (i != BUFF_SIZE)
-	  return 0;
+	return (0);
       size += BUFF_SIZE;
     }
-  return -1;
+  return (-1);
 }
-/*
-int main(void)
-{
-  int fp = open("testfile", O_RDONLY);
-  char *oi;
-  get_next_line(fp, &oi);
-    printf("%s\n", oi);
-  return 0;
-}
-
-int main(void)
-{
-  char *a = malloc (30);
-  char b[] = "heey";
-
-  a[0] = 'u';
-  a[1] = 'a';
-  a[2] = 'b';
-  a[3] = '\0';
-  printf("string = %s\n", a);
-  ft_strccat(a, b, '\n', 4);
-  printf("%s", a);
-  return 0;
-}
-*/
