@@ -6,12 +6,11 @@
 /*   By: fschuber <fschuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/01 14:42:06 by fschuber          #+#    #+#             */
-/*   Updated: 2014/12/16 20:54:10 by fschuber         ###   ########.fr       */
+/*   Updated: 2015/04/29 17:19:24 by fschuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "libft/libft.h"
 
 char		*ft_realloc(char *ptr, size_t size)
 {
@@ -49,6 +48,7 @@ int			get_next_line(const int fd, char **line)
 	*line[0] = '\0';
 	while (1)
 	{
+		ft_strclr(buff);
 		*line = ft_realloc(*line, size);
 		if (!(*line))
 			return (-1);
